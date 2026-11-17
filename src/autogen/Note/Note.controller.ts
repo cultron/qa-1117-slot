@@ -8,19 +8,19 @@
 import { Controller, Body } from "@nestjs/common";
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody, CreateManyDto } from '@apso/crud';
 import { ApiTags, ApiResponse, ApiOperation, ApiBody } from '@nestjs/swagger';
-import {VisitorCreate, VisitorUpdate} from './dtos/Visitor.dto'
+import {NoteCreate, NoteUpdate} from './dtos/Note.dto'
 // The entity, not the response DTO: the documented filter parameters (one per
 // column, which is also what an MCP list tool accepts) come from its columns.
-import { Visitor } from './Visitor.entity';
-import {VisitorService} from './Visitor.service';
+import { Note } from './Note.entity';
+import {NoteService} from './Note.service';
   
 @Crud({
     model: {
-        type: Visitor    },
+        type: Note    },
     dto: {
-        create: VisitorCreate,
-        update: VisitorUpdate,
-        replace: VisitorUpdate,
+        create: NoteCreate,
+        update: NoteUpdate,
+        replace: NoteUpdate,
     },
     validation: false,
     // List queries are PostgREST syntax only (?status=eq.open&select=id,name&order=id.desc).
@@ -39,23 +39,23 @@ import {VisitorService} from './Visitor.service';
         // header has the total (0-24/42). The largest limit is 100.
         limit: 25,
                     join: {
-                                                                            entries: { eager: false },
+                                                                            notebook: { eager: false },
                                                                                                     },
              }
 })
 
-@Controller('Visitors')
-@ApiTags('Visitors')
-export class VisitorController implements CrudController<Visitor>{
-    constructor(public service: VisitorService) {}
+@Controller('Notes')
+@ApiTags('Notes')
+export class NoteController implements CrudController<Note>{
+    constructor(public service: NoteService) {}
 
         
-    get base(): CrudController<Visitor> {
+    get base(): CrudController<Note> {
         return this;
     }
 
     @Override('getManyBase')
-    @ApiOperation({ summary: 'Retrieve multiple Visitors' })
+    @ApiOperation({ summary: 'Retrieve multiple Notes' })
     getMany(
         @ParsedRequest() req: CrudRequest,
     ) {
@@ -63,7 +63,7 @@ export class VisitorController implements CrudController<Visitor>{
     }
 
     @Override('getOneBase')
-    @ApiOperation({ summary: 'Retrieve a single Visitor' })
+    @ApiOperation({ summary: 'Retrieve a single Note' })
     get(
         @ParsedRequest() req: CrudRequest,
     ) {
@@ -71,48 +71,48 @@ export class VisitorController implements CrudController<Visitor>{
     }
 
     @Override('createOneBase')
-    @ApiOperation({ summary: 'Create a single Visitor' })
+    @ApiOperation({ summary: 'Create a single Note' })
         @ApiBody({
-        type: VisitorCreate ,
+        type: NoteCreate ,
         description: "The Description for the Post Body. Please look into the DTO. You will see the @ApiOptionalProperty used to define the Schema.",
         
     })
     create(
         @ParsedRequest() req: CrudRequest,
-        @Body() dto: VisitorCreate,
+        @Body() dto: NoteCreate,
     ) {
-        return this.base.createOneBase(req, dto as unknown as Visitor);
+        return this.base.createOneBase(req, dto as unknown as Note);
     }
 
     @Override('createManyBase')
-    @ApiOperation({ summary: 'Create multipleVisitors' })
+    @ApiOperation({ summary: 'Create multipleNotes' })
     createMany(
         @ParsedRequest() req: CrudRequest,
-        @Body() dto: CreateManyDto<VisitorCreate>
+        @Body() dto: CreateManyDto<NoteCreate>
     ) {
-        return this.base.createManyBase(req, dto as unknown as CreateManyDto<Visitor>);
+        return this.base.createManyBase(req, dto as unknown as CreateManyDto<Note>);
     }
 
     @Override('updateOneBase')
-    @ApiOperation({ summary: 'Update a single Visitor' })
+    @ApiOperation({ summary: 'Update a single Note' })
     update(
         @ParsedRequest() req: CrudRequest,
-        @Body() dto: VisitorUpdate,
+        @Body() dto: NoteUpdate,
     ) {
-        return this.base.updateOneBase(req, dto as unknown as Visitor);
+        return this.base.updateOneBase(req, dto as unknown as Note);
     }
 
     @Override('replaceOneBase')
-    @ApiOperation({ summary: 'Replace a single Visitor' })
+    @ApiOperation({ summary: 'Replace a single Note' })
     replace(
         @ParsedRequest() req: CrudRequest,
-        @Body() dto: VisitorUpdate,
+        @Body() dto: NoteUpdate,
     ) {
-        return this.base.replaceOneBase(req, dto as unknown as Visitor);
+        return this.base.replaceOneBase(req, dto as unknown as Note);
     }
 
     @Override('deleteOneBase')
-    @ApiOperation({ summary: 'Delete a single Visitor' })
+    @ApiOperation({ summary: 'Delete a single Note' })
     delete(
         @ParsedRequest() req: CrudRequest,
     ) {

@@ -22,54 +22,54 @@ import {
 import { Type } from 'class-transformer';
 
 
-export class EntryCreate {
+export class NotebookCreate {
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
-    message?: string;
+    title?: string;
 
-    @ApiPropertyOptional()
-    @IsOptional()
-    @IsNumber()
-    rating?: number;
-
-    @ApiPropertyOptional()
-    @IsOptional()
-    @IsNumber()
-    visitorId?: number;
-
-}
-
-export class EntryUpdate {
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
-    message?: string;
+    description?: string;
 
     @ApiPropertyOptional()
     @IsOptional()
-    @IsNumber()
-    rating?: number;
-
-    @ApiPropertyOptional()
-    @IsOptional()
-    @IsNumber()
-    visitorId?: number;
+    @IsString()
+    slug?: string;
 
 }
 
-export class Entry {
+export class NotebookUpdate {
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    title?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    description?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    slug?: string;
+
+}
+
+export class Notebook {
     @ApiProperty()
     id: number;
 
     @ApiPropertyOptional()
-    message?: string;
+    title?: string;
 
     @ApiPropertyOptional()
-    rating?: number;
+    description?: string;
 
     @ApiPropertyOptional()
-    visitorId?: number;
+    slug?: string;
 
     @ApiProperty()
     created_at: Date;

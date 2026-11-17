@@ -6,9 +6,9 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
-import {Visitor, VisitorCreate} from './dtos/Visitor.dto'
-import {VisitorController} from "./Visitor.controller";
-import {VisitorService} from "./Visitor.service";
+import {Note, NoteCreate} from './dtos/Note.dto'
+import {NoteController} from "./Note.controller";
+import {NoteService} from "./Note.service";
 import { CrudRequest } from '@apso/crud';
 
 const baseRequest: CrudRequest = {
@@ -29,41 +29,41 @@ const baseRequest: CrudRequest = {
   options: {}
 }
 
-describe('VisitorController', () => {
-  let controller: VisitorController;
-  let spyService: VisitorService;
+describe('NoteController', () => {
+  let controller: NoteController;
+  let spyService: NoteService;
 
   beforeEach(async () => {
     const ApiServiceProvider = {
-      provide: VisitorService,
+      provide: NoteService,
       useFactory: () => ({
         createOne: jest.fn(() => []),
         getOne: jest.fn(() => { }),
       })
     }
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [VisitorController],
-      providers: [VisitorService, ApiServiceProvider]
+      controllers: [NoteController],
+      providers: [NoteService, ApiServiceProvider]
     }).compile();
 
-    controller = module.get<VisitorController>(VisitorController);
-    spyService = module.get<VisitorService>(VisitorService);
+    controller = module.get<NoteController>(NoteController);
+    spyService = module.get<NoteService>(NoteService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should call VisitorController get method', () => {
+  it('should call NoteController get method', () => {
     const req: CrudRequest = { ...baseRequest }
     expect(controller.get(req)).not.toEqual(null);
     expect(spyService.getOne).toHaveBeenCalled();
   });
 
-  it('should call VisitorController create method', () => {
+  it('should call NoteController create method', () => {
     const req: CrudRequest = { ...baseRequest }
     
-    const dto = new Visitor();
+    const dto = new Note();
     controller.create(req, dto);
     expect(controller.create(req, dto)).not.toEqual(null);
     expect(spyService.createOne).toHaveBeenCalled();

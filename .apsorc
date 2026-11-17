@@ -1,46 +1,39 @@
 {
   "entities": [
     {
-      "name": "Visitor",
+      "name": "Notebook",
       "fields": [
         {
-          "name": "name",
+          "name": "title",
           "type": "varchar",
-          "isIndex": false,
-          "primary": false,
-          "isUnique": false,
           "nullable": false
         },
         {
-          "name": "email",
+          "name": "description",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "slug",
           "type": "varchar",
           "isIndex": true,
-          "primary": false,
           "isUnique": true,
           "nullable": false
-        },
-        {
-          "name": "website",
-          "type": "varchar",
-          "isIndex": false,
-          "primary": false,
-          "isUnique": false,
-          "nullable": true
         }
       ],
       "indexes": [
         {
           "fields": [
-            "email"
+            "slug"
           ],
           "unique": true
         }
       ],
       "uniques": [
         {
-          "name": "unique_visitor_email",
+          "name": "unique_notebook_slug",
           "fields": [
-            "email"
+            "slug"
           ]
         }
       ],
@@ -48,35 +41,50 @@
       "updated_at": true
     },
     {
-      "name": "Entry",
+      "name": "Note",
       "fields": [
         {
-          "name": "message",
-          "type": "text",
-          "isIndex": false,
-          "primary": false,
-          "isUnique": false,
+          "name": "title",
+          "type": "varchar",
           "nullable": false
         },
         {
-          "name": "rating",
-          "type": "integer",
-          "isIndex": false,
-          "primary": false,
-          "isUnique": false,
+          "name": "content",
+          "type": "text",
           "nullable": true
+        },
+        {
+          "name": "slug",
+          "type": "varchar",
+          "isIndex": true,
+          "isUnique": true,
+          "nullable": false
         }
       ],
-      "indexes": [],
-      "uniques": [],
+      "indexes": [
+        {
+          "fields": [
+            "slug"
+          ],
+          "unique": true
+        }
+      ],
+      "uniques": [
+        {
+          "name": "unique_note_slug",
+          "fields": [
+            "slug"
+          ]
+        }
+      ],
       "created_at": true,
       "updated_at": true
     }
   ],
   "relationships": [
     {
-      "to": "Visitor",
-      "from": "Entry",
+      "to": "Notebook",
+      "from": "Note",
       "type": "ManyToOne",
       "index": true
     }

@@ -6,9 +6,9 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
-import {Entry, EntryCreate} from './dtos/Entry.dto'
-import {EntryController} from "./Entry.controller";
-import {EntryService} from "./Entry.service";
+import {Notebook, NotebookCreate} from './dtos/Notebook.dto'
+import {NotebookController} from "./Notebook.controller";
+import {NotebookService} from "./Notebook.service";
 import { CrudRequest } from '@apso/crud';
 
 const baseRequest: CrudRequest = {
@@ -29,41 +29,41 @@ const baseRequest: CrudRequest = {
   options: {}
 }
 
-describe('EntryController', () => {
-  let controller: EntryController;
-  let spyService: EntryService;
+describe('NotebookController', () => {
+  let controller: NotebookController;
+  let spyService: NotebookService;
 
   beforeEach(async () => {
     const ApiServiceProvider = {
-      provide: EntryService,
+      provide: NotebookService,
       useFactory: () => ({
         createOne: jest.fn(() => []),
         getOne: jest.fn(() => { }),
       })
     }
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [EntryController],
-      providers: [EntryService, ApiServiceProvider]
+      controllers: [NotebookController],
+      providers: [NotebookService, ApiServiceProvider]
     }).compile();
 
-    controller = module.get<EntryController>(EntryController);
-    spyService = module.get<EntryService>(EntryService);
+    controller = module.get<NotebookController>(NotebookController);
+    spyService = module.get<NotebookService>(NotebookService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should call EntryController get method', () => {
+  it('should call NotebookController get method', () => {
     const req: CrudRequest = { ...baseRequest }
     expect(controller.get(req)).not.toEqual(null);
     expect(spyService.getOne).toHaveBeenCalled();
   });
 
-  it('should call EntryController create method', () => {
+  it('should call NotebookController create method', () => {
     const req: CrudRequest = { ...baseRequest }
     
-    const dto = new Entry();
+    const dto = new Notebook();
     controller.create(req, dto);
     expect(controller.create(req, dto)).not.toEqual(null);
     expect(spyService.createOne).toHaveBeenCalled();

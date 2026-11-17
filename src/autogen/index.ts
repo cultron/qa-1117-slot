@@ -5,12 +5,12 @@
  * changes will be overwritten on the next scaffold.
  */
 
-import {VisitorModule} from './Visitor/Visitor.module'
-import {EntryModule} from './Entry/Entry.module'
+import {NotebookModule} from './Notebook/Notebook.module'
+import {NoteModule} from './Note/Note.module'
 import { GuardsModule } from './guards/guards.module'
 
 export default [
-VisitorModule,
-EntryModule,
+NotebookModule,
+NoteModule,
 GuardsModule,
 ]

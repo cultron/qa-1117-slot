@@ -22,54 +22,67 @@ import {
 import { Type } from 'class-transformer';
 
 
-export class VisitorCreate {
+export class NoteCreate {
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
-    name?: string;
+    title?: string;
 
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
-    email?: string;
+    content?: string;
 
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
-    website?: string;
+    slug?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsNumber()
+    notebookId?: number;
 
 }
 
-export class VisitorUpdate {
+export class NoteUpdate {
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
-    name?: string;
+    title?: string;
 
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
-    email?: string;
+    content?: string;
 
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
-    website?: string;
+    slug?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsNumber()
+    notebookId?: number;
 
 }
 
-export class Visitor {
+export class Note {
     @ApiProperty()
     id: number;
 
     @ApiPropertyOptional()
-    name?: string;
+    title?: string;
 
     @ApiPropertyOptional()
-    email?: string;
+    content?: string;
 
     @ApiPropertyOptional()
-    website?: string;
+    slug?: string;
+
+    @ApiPropertyOptional()
+    notebookId?: number;
 
     @ApiProperty()
     created_at: Date;

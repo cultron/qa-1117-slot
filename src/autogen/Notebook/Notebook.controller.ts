@@ -8,19 +8,19 @@
 import { Controller, Body } from "@nestjs/common";
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody, CreateManyDto } from '@apso/crud';
 import { ApiTags, ApiResponse, ApiOperation, ApiBody } from '@nestjs/swagger';
-import {EntryCreate, EntryUpdate} from './dtos/Entry.dto'
+import {NotebookCreate, NotebookUpdate} from './dtos/Notebook.dto'
 // The entity, not the response DTO: the documented filter parameters (one per
 // column, which is also what an MCP list tool accepts) come from its columns.
-import { Entry } from './Entry.entity';
-import {EntryService} from './Entry.service';
+import { Notebook } from './Notebook.entity';
+import {NotebookService} from './Notebook.service';
   
 @Crud({
     model: {
-        type: Entry    },
+        type: Notebook    },
     dto: {
-        create: EntryCreate,
-        update: EntryUpdate,
-        replace: EntryUpdate,
+        create: NotebookCreate,
+        update: NotebookUpdate,
+        replace: NotebookUpdate,
     },
     validation: false,
     // List queries are PostgREST syntax only (?status=eq.open&select=id,name&order=id.desc).
@@ -39,23 +39,23 @@ import {EntryService} from './Entry.service';
         // header has the total (0-24/42). The largest limit is 100.
         limit: 25,
                     join: {
-                                                                            visitor: { eager: false },
+                                                                            notes: { eager: false },
                                                                                                     },
              }
 })
 
-@Controller('Entries')
-@ApiTags('Entries')
-export class EntryController implements CrudController<Entry>{
-    constructor(public service: EntryService) {}
+@Controller('Notebooks')
+@ApiTags('Notebooks')
+export class NotebookController implements CrudController<Notebook>{
+    constructor(public service: NotebookService) {}
 
         
-    get base(): CrudController<Entry> {
+    get base(): CrudController<Notebook> {
         return this;
     }
 
     @Override('getManyBase')
-    @ApiOperation({ summary: 'Retrieve multiple Entries' })
+    @ApiOperation({ summary: 'Retrieve multiple Notebooks' })
     getMany(
         @ParsedRequest() req: CrudRequest,
     ) {
@@ -63,7 +63,7 @@ export class EntryController implements CrudController<Entry>{
     }
 
     @Override('getOneBase')
-    @ApiOperation({ summary: 'Retrieve a single Entry' })
+    @ApiOperation({ summary: 'Retrieve a single Notebook' })
     get(
         @ParsedRequest() req: CrudRequest,
     ) {
@@ -71,48 +71,48 @@ export class EntryController implements CrudController<Entry>{
     }
 
     @Override('createOneBase')
-    @ApiOperation({ summary: 'Create a single Entry' })
+    @ApiOperation({ summary: 'Create a single Notebook' })
         @ApiBody({
-        type: EntryCreate ,
+        type: NotebookCreate ,
         description: "The Description for the Post Body. Please look into the DTO. You will see the @ApiOptionalProperty used to define the Schema.",
         
     })
     create(
         @ParsedRequest() req: CrudRequest,
-        @Body() dto: EntryCreate,
+        @Body() dto: NotebookCreate,
     ) {
-        return this.base.createOneBase(req, dto as unknown as Entry);
+        return this.base.createOneBase(req, dto as unknown as Notebook);
     }
 
     @Override('createManyBase')
-    @ApiOperation({ summary: 'Create multipleEntries' })
+    @ApiOperation({ summary: 'Create multipleNotebooks' })
     createMany(
         @ParsedRequest() req: CrudRequest,
-        @Body() dto: CreateManyDto<EntryCreate>
+        @Body() dto: CreateManyDto<NotebookCreate>
     ) {
-        return this.base.createManyBase(req, dto as unknown as CreateManyDto<Entry>);
+        return this.base.createManyBase(req, dto as unknown as CreateManyDto<Notebook>);
     }
 
     @Override('updateOneBase')
-    @ApiOperation({ summary: 'Update a single Entry' })
+    @ApiOperation({ summary: 'Update a single Notebook' })
     update(
         @ParsedRequest() req: CrudRequest,
-        @Body() dto: EntryUpdate,
+        @Body() dto: NotebookUpdate,
     ) {
-        return this.base.updateOneBase(req, dto as unknown as Entry);
+        return this.base.updateOneBase(req, dto as unknown as Notebook);
     }
 
     @Override('replaceOneBase')
-    @ApiOperation({ summary: 'Replace a single Entry' })
+    @ApiOperation({ summary: 'Replace a single Notebook' })
     replace(
         @ParsedRequest() req: CrudRequest,
-        @Body() dto: EntryUpdate,
+        @Body() dto: NotebookUpdate,
     ) {
-        return this.base.replaceOneBase(req, dto as unknown as Entry);
+        return this.base.replaceOneBase(req, dto as unknown as Notebook);
     }
 
     @Override('deleteOneBase')
-    @ApiOperation({ summary: 'Delete a single Entry' })
+    @ApiOperation({ summary: 'Delete a single Notebook' })
     delete(
         @ParsedRequest() req: CrudRequest,
     ) {

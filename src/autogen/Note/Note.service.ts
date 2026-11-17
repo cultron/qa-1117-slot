@@ -12,11 +12,11 @@ import { QueryOptions } from '@apso/crud';
 import { ParsedRequestParams } from '@apso/crud-request';
 import { Repository } from 'typeorm';
 
-import {Visitor} from './Visitor.entity'
+import {Note} from './Note.entity'
 
 @Injectable()
-export class VisitorService extends TypeOrmCrudService<Visitor> {
-  constructor(@InjectRepository(Visitor) repo: Repository<Visitor>) {
+export class NoteService extends TypeOrmCrudService<Note> {
+  constructor(@InjectRepository(Note) repo: Repository<Note>) {
     super(repo);
   }
 

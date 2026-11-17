@@ -9,7 +9,7 @@
 import {
     Column,
     Entity,
-ManyToOne,    CreateDateColumn,
+OneToMany,    CreateDateColumn,
     UpdateDateColumn,
     PrimaryGeneratedColumn,
     Generated,
@@ -30,12 +30,14 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CrudValidationGroups } from '@apso/crud';
-import {Visitor} from '../Visitor/Visitor.entity';
+import {Note} from '../Note/Note.entity';
 
 const { CREATE, UPDATE } = CrudValidationGroups;
 
-@Entity('entry')
-export class Entry {
+@Entity('notebook')
+@Index(["slug"], { unique: true } )
+@Unique( "unique_notebook_slug", ["slug"])
+export class Notebook {
     // Fields
         @PrimaryGeneratedColumn()
     id!: number;
@@ -50,25 +52,31 @@ export class Entry {
 
 @IsOptional({ groups: [UPDATE] })
 @IsNotEmpty({ groups: [CREATE] })
+@Column({ type: "varchar", length: 255, nullable: false  })
 
-@Column({ type: "text", nullable: false  })
-
-message: string;
+title: string; 
 
 
-@Column({ "type": "int", nullable: true })
+@IsOptional({ groups: [UPDATE] })
 
-rating: number;
+@Column({ type: "text", nullable: true  })
+
+description: string;
+
+
+@IsOptional({ groups: [UPDATE] })
+@IsNotEmpty({ groups: [CREATE] })
+@Column({ type: "varchar", length: 255, nullable: false  })
+
+slug: string; 
 
 // Associations    
 
             
-                    @Index()
-                @ManyToOne(() => Visitor, visitor => visitor.entries)
-        @JoinColumn({ name: 'visitorId' })
-        visitor: Visitor;
+    
+        @OneToMany(
+            () => Note,
+            note => note.notebook        )
+        notes: Note[];
 
-                @Column({ type: "integer", })
-        visitorId: number;
-        
     }

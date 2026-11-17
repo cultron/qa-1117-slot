@@ -7,11 +7,11 @@
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { EntryService } from './Entry.service';
-import { Entry } from './Entry.entity';
+import { NotebookService } from './Notebook.service';
+import { Notebook } from './Notebook.entity';
 
-describe('EntryService', () => {
-  let service: EntryService;
+describe('NotebookService', () => {
+  let service: NotebookService;
   let mockRepository: any;
 
   beforeEach(async () => {
@@ -50,7 +50,7 @@ describe('EntryService', () => {
       remove: jest.fn().mockResolvedValue({}),
       count: jest.fn().mockResolvedValue(0),
       createQueryBuilder: jest.fn(() => mockQueryBuilder),
-      target: Entry,
+      target: Notebook,
       metadata: {
         columns: [],
         relations: [],
@@ -72,15 +72,15 @@ describe('EntryService', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        EntryService,
+        NotebookService,
         {
-          provide: getRepositoryToken(Entry),
+          provide: getRepositoryToken(Notebook),
           useValue: mockRepository,
         },
       ],
     }).compile();
 
-    service = module.get<EntryService>(EntryService);
+    service = module.get<NotebookService>(NotebookService);
   });
 
   it('should be defined', () => {
